@@ -3,3 +3,7 @@
 .bg-gradient-135 {
   background: linear-gradient(135deg, #217e64, #443d74);
 }
+
+.shadow-sm {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
