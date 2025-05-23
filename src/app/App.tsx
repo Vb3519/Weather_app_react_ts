@@ -8,6 +8,10 @@ import { MdVisibility } from 'react-icons/md';
 import { FaCaretDown } from 'react-icons/fa';
 import { FaCaretUp } from 'react-icons/fa';
 
+import { CiCloudSun } from 'react-icons/ci';
+import { TiWeatherPartlySunny } from 'react-icons/ti';
+import { GiThermometerHot } from 'react-icons/gi';
+
 const App = () => {
   return (
     <div className="h-full w-full overflow-y-auto p-2 flex flex-col gap-4 items-center justify-center bg-gradient-135">
@@ -208,7 +212,7 @@ const App = () => {
           <div className="flex items-center gap-2 overflow-x-auto">
             <div className="flex items-center gap-2">
               <ul className="my-2 w-full flex gap-2 text-nowrap">
-                <li className="p-2 cursor-pointer rounded-sm transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)]">
+                <li className="p-2 cursor-pointer rounded-sm bg-white/15 [box-shadow:0_4px_10px_rgba(0,0,0,0.15)] transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)]">
                   Пн, 19 Май
                 </li>
                 <li className="p-2 cursor-pointer rounded-sm transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)]">
@@ -268,6 +272,29 @@ const App = () => {
               </li>
             </ul>
           </div>
+        </section>
+
+        {/* --------------------------- ЗАГЛУШКИ: --------------------------- */}
+        {/* --------------------------- ЗАГЛУШКИ: --------------------------- */}
+        {/* --------------------------- ЗАГЛУШКИ: --------------------------- */}
+        <section className="h-65 p-2 flex flex-col gap-4 items-center justify-center text-[#e0e0e0] text-sm text-shadow-sm bg-white/20 rounded-sm">
+          <h2 className="text-center">
+            Здесь будет текущий прогноз погоды в указанном Вами городе
+          </h2>
+          <CiCloudSun className="text-8xl opacity-50" />
+        </section>
+
+        <section className="h-31 p-2 flex flex-col gap-2 items-center justify-center text-[#e0e0e0] text-sm text-shadow-sm bg-white/20 rounded-sm">
+          <h2 className="text-center">Прогноз погоды на ближайшие 12 часов</h2>
+          <TiWeatherPartlySunny className="text-8xl opacity-50" />
+        </section>
+
+        <section className="h-80 p-2 flex flex-col gap-2 items-center justify-center text-[#e0e0e0] text-sm text-shadow-sm bg-white/20 rounded-sm">
+          <h2 className="pb-2 font-semibold text-xl text-center border-b-2 border-b-blue-800/20">
+            Прогноз погоды на 5 дней:
+          </h2>
+
+          <GiThermometerHot className="h-[80%] text-8xl opacity-50" />
         </section>
       </main>
 
