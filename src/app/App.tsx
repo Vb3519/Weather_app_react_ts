@@ -12,13 +12,17 @@ import { CiCloudSun } from 'react-icons/ci';
 import { TiWeatherPartlySunny } from 'react-icons/ti';
 import { GiThermometerHot } from 'react-icons/gi';
 
+import { FaWhatsapp } from 'react-icons/fa';
+import { FaTelegramPlane } from 'react-icons/fa';
+import { MdOutlineEmail } from 'react-icons/md';
+
 const App = () => {
   return (
-    <div className="h-full w-full overflow-y-auto p-2 flex flex-col gap-4 items-center justify-center bg-gradient-135">
+    <div className="h-full w-full overflow-y-auto flex flex-col gap-4 items-center justify-center bg-gradient-135">
       {/* --------------------------- HEADER: --------------------------- */}
       {/* --------------------------- HEADER: --------------------------- */}
       {/* --------------------------- HEADER: --------------------------- */}
-      <header className="w-full font-[inter] flex justify-between items-center gap-4">
+      <header className="w-full p-2 font-[inter] flex justify-between items-center gap-4">
         <div className="p-2 text-[whitesmoke] bg-white/20 rounded-sm cursor-pointer">
           <MdOutlineSegment className="text-2xl" />
         </div>
@@ -36,7 +40,7 @@ const App = () => {
       {/* --------------------------- MAIN: --------------------------- */}
       {/* --------------------------- MAIN: --------------------------- */}
       {/* --------------------------- MAIN: --------------------------- */}
-      <main className="mb-auto w-full font-[inter] flex flex-col gap-4">
+      <main className="mb-auto p-2 w-full font-[inter] flex flex-col gap-4">
         {/* --------------------------- Текущая погода: --------------------------- */}
         <section className="p-2 text-[#e0e0e0] text-shadow-sm flex flex-col gap-1 bg-white/20 rounded-sm">
           <h2 className="font-semibold text-xl text-center">Санкт-Петербург</h2>
@@ -301,7 +305,22 @@ const App = () => {
       {/* --------------------------- FOOTER: --------------------------- */}
       {/* --------------------------- FOOTER: --------------------------- */}
       {/* --------------------------- FOOTER: --------------------------- */}
-      <footer></footer>
+      <footer className="p-2 h-40 w-full text-[#e0e0e0] text-shadow-sm footer-bg-gradient">
+        <h3 className="font-semibold">Weather App</h3>
+        <ul className="flex gap-2">
+          <li className="p-2 rounded-[50%] bg-green-700 cursor-pointer">
+            <FaWhatsapp className="text-2xl" />
+          </li>
+          <li className="p-2 rounded-[50%] bg-blue-600 cursor-pointer">
+            <FaTelegramPlane className="text-2xl" />
+          </li>
+        </ul>
+        <div className="flex gap-2 items-center justify-start">
+          <MdOutlineEmail />
+          <span>vb415@bk.ru</span>
+        </div>
+        <span>by Viktor Bordyugov 2025</span>
+      </footer>
     </div>
   );
 };
