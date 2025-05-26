@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      async function getCityWeather(cityName) {
+        const API_KEY = '0d7b538e37d8be8642a8f62cd18c61e3';
+        const lang = 'ru';
+        const measurementUnits = 'metric';
+
+        try {
+          const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&lang=${lang}&units=${measurementUnits}`
+          );
+
+          // const response = await fetch(
+          //   `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}&lang=${lang}&units=${measurementUnits}`
+          // );
+
+          if (response.ok) {
+            const weatherData = await response.json();
+            console.log('Погода в запрашиваемом городе:', weatherData);
+            return weatherData;
+          } else {
+            console.log(`HTTP Error: ${response.status}`);
+          }
+        } catch (error) {
+          console.log('Error:', error);
+        }
+      }
+
+      // Вызов функции для проверки
+      getCityWeather('Санкт-Петербург');
+    </script>
+  </body>
+</html>
