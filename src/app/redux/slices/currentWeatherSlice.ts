@@ -1,58 +1,56 @@
+import axios from 'axios';
+
 import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-interface Main {
-  feels_like: number;
-  grnd_level: number;
-  humidity: number;
-  pressure: number;
-  sea_level: number;
-  temp: number;
-  temp_max: number;
-  temp_min: number;
-}
+// Api:
+import { getCurrentWeatherEndpointLink } from '../../../shared/config/apiData';
 
-interface Sys {
-  country: string;
-  id: number;
-  sunrise: number;
-  sunset: number;
-  type: number;
-}
+// Types:
+import {
+  CurrentWeatherData_Type,
+  CurrentWeatherSlice_Type,
+  CurrentWeatherState_Type,
+} from '../../features/currentWeather/currentWeatherTypes';
 
-interface Weather {
-  description: string;
-  icon: string;
-  id: number;
-  main: string;
-}
+// Utils:
+import imitateFetchDataDelay from '../../../shared/utils/imitateFetchDataDelay';
 
-export interface CurrentWeatherData_Type {
-  base: string;
-  clouds: { all: number };
-  cod: number;
-  coord: { lat: number; lon: number };
-  dt: number;
-  id: number;
-  main: Main;
-  name: string;
-  rain?: { '1h': number };
-  sys: Sys;
-  timezone: number;
-  visibility: number;
-  weather?: Weather[];
-  wind: { deg: number; speed: number };
-}
+// Получение данных о текущей погоде по названию города:
+// ------------------------------------------------------------
+export const getCurrentWeatherData = createAsyncThunk(
+  'currentWeather/getWeatherData',
+  async (payload: { cityName: string }, thunkAPI) => {
+    const { cityName } = payload;
 
-interface CurrentWeatherState_Type {
-  cityName: string;
-  currentWeather: CurrentWeatherData_Type | null;
-  isLoadingViaAPI: boolean;
-}
+    const url: string = getCurrentWeatherEndpointLink(cityName);
+
+    // Имитация задержки ответа от сервера:
+    await imitateFetchDataDelay(2000);
+
+    try {
+      const fetchWeatherDataResponse = await axios.get(url);
+      const weatherData: CurrentWeatherData_Type =
+        fetchWeatherDataResponse.data;
+
+      console.log('Текущая погода:', weatherData);
+      return weatherData;
+    } catch (error: unknown) {
+      const errorMsg: string = `Error: ${(error as Error).message}`;
+      console.log(errorMsg);
+
+      // Сохраняем ошибку и потом выбрасываем ее (чтобы промис был rejected):
+      thunkAPI.dispatch(setErrorMsg(errorMsg));
+      return thunkAPI.rejectWithValue(errorMsg);
+    }
+  }
+);
 
 const initialState: CurrentWeatherState_Type = {
   cityName: '',
-  currentWeather: null,
+  weatherData: null,
   isLoadingViaAPI: false,
+  errorMsg: '',
 };
 
 const currentWeatherSlice = createSlice({
@@ -63,21 +61,49 @@ const currentWeatherSlice = createSlice({
       return { ...state, cityName: action.payload };
     },
 
-    fetchCurrentWeatherData: (state, action) => {
+    setErrorMsg: (state, action) => {
+      return { ...state, errorMsg: action.payload };
+    },
+  },
+
+  // Получение данных о текущей погоде по названию города:
+  // ------------------------------------------------------------
+  extraReducers: (builder) => {
+    builder.addCase(getCurrentWeatherData.pending, (state) => {
+      return { ...state, isLoadingViaAPI: true, errorMsg: '' };
+    });
+
+    builder.addCase(getCurrentWeatherData.fulfilled, (state, action) => {
+      if (action.payload?.main) {
+        state.weatherData = action.payload;
+      }
+
+      state.isLoadingViaAPI = false;
+      state.cityName = '';
+    });
+
+    builder.addCase(getCurrentWeatherData.rejected, (state) => {
       return {
         ...state,
-        isLoadingViaAPI: true,
-        currentWeather: action.payload,
+        cityName: '',
+        weatherData: null,
+        isLoadingViaAPI: false,
       };
-    },
+    });
   },
 });
 
 // Действия:
-export const { setCityName, fetchCurrentWeatherData } =
-  currentWeatherSlice.actions;
+// --------------------
+export const {
+  setCityName,
+
+  setErrorMsg,
+} = currentWeatherSlice.actions;
 
 // Слайсы состояния:
-export const selectCurrentWeatherSlice = (state: any) => state.currentWeather;
+// --------------------
+export const selectCurrentWeatherSlice = (state: CurrentWeatherSlice_Type) =>
+  state.currentWeather;
 
 export default currentWeatherSlice.reducer;

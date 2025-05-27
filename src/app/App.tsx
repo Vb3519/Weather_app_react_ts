@@ -14,9 +14,9 @@ import EmptyFiveDaysForecast from './features/weatherForecast/FiveDaysForecast/E
 const App = () => {
   return (
     <div className="h-full w-full overflow-y-auto flex flex-col gap-4 items-center justify-center bg-gradient-135">
-      {/* --------------------------- HEADER: --------------------------- */}
+      {/* -------------- HEADER: -------------- */}
       <Header />
-      {/* --------------------------- MAIN: --------------------------- */}
+      {/* -------------- MAIN: -------------- */}
       <main className="mb-auto p-2 w-full font-[inter] flex flex-col gap-4">
         <CurrentWeather />
         <CurrentDayForecast />
@@ -24,13 +24,12 @@ const App = () => {
         <GeneralFiveDaysForecast />
         <DetailedFiveDaysForecast />
 
-        {/* --------------------------- ЗАГЛУШКИ: --------------------------- */}
-        <EmptyCurrentWeather />
+        {/* -------------- ЗАГЛУШКИ: -------------- */}
         <EmptyCurrentDayForecast />
         <EmptyFiveDaysForecast />
       </main>
 
-      {/* --------------------------- FOOTER: --------------------------- */}
+      {/* -------------- FOOTER: -------------- */}
       <Footer />
     </div>
   );
