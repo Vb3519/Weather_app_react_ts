@@ -12,12 +12,16 @@ import {
 } from '../app/redux/slices/currentWeatherSlice';
 
 import {
+  setCurrentDayForecastData,
   selectWeatherForecastSlice,
   getGeneralWeatherForecast,
 } from '../app/redux/slices/weatherForecastSlice';
 
 // Types:
 import { AppDispatch } from '../app/redux/store';
+
+// Utils:
+import extractDailyWeatherForecast from '../shared/utils/extractDailyWeatherForecast';
 
 const Header = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -46,7 +50,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full p-2 font-[inter] flex justify-between items-center gap-4">
+    <header className="w-full p-2 font-[inter] flex justify-between items-center gap-4 xs:px-4">
       <button className="p-2 text-[whitesmoke] bg-white/20 rounded-sm cursor-pointer">
         <MdOutlineSegment className="text-2xl" />
       </button>

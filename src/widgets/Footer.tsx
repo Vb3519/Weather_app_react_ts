@@ -4,7 +4,7 @@ import { MdOutlineEmail } from 'react-icons/md';
 
 const Footer = () => {
   return (
-    <footer className="p-2 w-full flex flex-col gap-2 text-[#e0e0e0] text-shadow-sm footer-bg-gradient">
+    <footer className="p-2 w-full flex flex-col gap-2 text-[#e0e0e0] text-shadow-sm footer-bg-gradient xs:px-4">
       <h3 className="mb-2 font-semibold text-xl text-[#e0e0e0]">Weather App</h3>
       <div className="flex flex-col gap-2">
         <ul className="flex gap-2">

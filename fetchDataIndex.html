@@ -34,7 +34,14 @@
       }
 
       // Вызов функции для проверки
-      getCityWeather('Санкт-Петербург');
+      // getCityWeather('Санкт-Петербург');
+      let weatherData = null;
+      console.log('weatherData ДО загрузки данных:', weatherData);
+
+      (async () => {
+        weatherData = await getCityWeather('Санкт-Петербург');
+        console.log('weatherData ПОСЛЕ загрузки данных:', weatherData);
+      })();
     </script>
   </body>
 </html>

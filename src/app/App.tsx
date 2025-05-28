@@ -17,7 +17,7 @@ const App = () => {
       {/* -------------- HEADER: -------------- */}
       <Header />
       {/* -------------- MAIN: -------------- */}
-      <main className="mb-auto p-2 w-full font-[inter] flex flex-col gap-4">
+      <main className="mb-auto px-2 w-full font-[inter] flex flex-col gap-4 xs:px-4">
         <CurrentWeather />
         <CurrentDayForecast />
 

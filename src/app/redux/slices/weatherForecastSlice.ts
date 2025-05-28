@@ -8,51 +8,10 @@ import { getWeatherForecastEndpointLink } from '../../../shared/config/apiData';
 
 // Utils:
 import imitateFetchDataDelay from '../../../shared/utils/imitateFetchDataDelay';
+import extractDailyWeatherForecast from '../../../shared/utils/extractDailyWeatherForecast';
 
-interface WeatherForecastDay_Type {
-  clouds: { all: number };
-  dt: number;
-  dt_txt: string;
-  main: {
-    feels_like: number;
-    grnd_level: number;
-    humidity: number;
-    pressure: number;
-    sea_level: number;
-    temp: number;
-    temp_kf: number;
-    temp_max: number;
-    temp_min: number;
-  };
-  pop: number;
-  sys: { pod: string };
-  visibility: number;
-  weather?: {
-    id: number;
-    main: string;
-    description: string;
-    icon: string;
-  }[];
-  wind: { deg: number; gust: number; speed: number };
-}
-
-interface City {
-  coord: { lat: number; lon: number };
-  country: string;
-  id: number;
-  name: string;
-  population: number;
-  sunrise: number;
-  sunset: number;
-  timezone: number;
-}
-
-interface GeneralWeatherForecast_Type {
-  city: City;
-  cnt: number;
-  cod: string;
-  list: WeatherForecastDay_Type[];
-}
+// Types:
+import { GeneralWeatherForecast_Type } from '../../features/weatherForecast/weatherForecastTypes';
 
 interface WeatherForecastState_Type {
   generalWeatherForecast: GeneralWeatherForecast_Type | null;
@@ -87,9 +46,19 @@ export const getGeneralWeatherForecast = createAsyncThunk(
       });
 
       if (weatherForecastResponse.ok) {
-        const generalWeatherForecast = await weatherForecastResponse.json();
+        const generalWeatherForecast: GeneralWeatherForecast_Type =
+          await weatherForecastResponse.json();
+
+        // Данные для рендера информации о прогнозе погоды на ближайшие 12 часов (шаг 3 часа):
+        const dailyWeatherForecastDataToRender = extractDailyWeatherForecast(
+          generalWeatherForecast
+        );
+        thunkApi.dispatch(
+          setCurrentDayForecastData(dailyWeatherForecastDataToRender)
+        );
 
         console.log('Общий прогноз погоды:', generalWeatherForecast);
+
         return generalWeatherForecast;
       } else {
         const errorMsg: string = `HTTP Error: ${weatherForecastResponse.status} ${weatherForecastResponse.statusText}`;
@@ -123,6 +92,10 @@ const weatherForecastSlice = createSlice({
     setErrorMsg: (state, action) => {
       return { ...state, errorMsg: action.payload };
     },
+
+    setCurrentDayForecastData: (state, action) => {
+      return { ...state, currentDayForecast: action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getGeneralWeatherForecast.pending, (state) => {
@@ -144,7 +117,8 @@ const weatherForecastSlice = createSlice({
 });
 
 // Действия:
-const { setErrorMsg } = weatherForecastSlice.actions;
+export const { setErrorMsg, setCurrentDayForecastData } =
+  weatherForecastSlice.actions;
 
 // Слайс состояния:
 export const selectWeatherForecastSlice = (state: WeatherForecastSlice_Type) =>
