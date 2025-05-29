@@ -12,10 +12,11 @@ import extractDailyWeatherForecast from '../../../shared/utils/extractDailyWeath
 
 // Types:
 import { GeneralWeatherForecast_Type } from '../../features/weatherForecast/weatherForecastTypes';
+import { ThreeHoursWeatherData_Type } from '../../../shared/utils/extractDailyWeatherForecast';
 
 interface WeatherForecastState_Type {
   generalWeatherForecast: GeneralWeatherForecast_Type | null;
-  currentDayForecast: null;
+  currentDayForecast: ThreeHoursWeatherData_Type[] | null;
   fiveDaysForecast: null;
   errorMsg: string;
   isLoadingViaAPI: boolean;
@@ -24,7 +25,7 @@ interface WeatherForecastState_Type {
 interface WeatherForecastSlice_Type {
   weatherForecast: {
     generalWeatherForecast: GeneralWeatherForecast_Type | null;
-    currentDayForecast: null;
+    currentDayForecast: ThreeHoursWeatherData_Type[] | null;
     fiveDaysForecast: null;
     errorMsg: string;
     isLoadingViaAPI: boolean;
@@ -41,32 +42,21 @@ export const getGeneralWeatherForecast = createAsyncThunk(
     const url: string = getWeatherForecastEndpointLink(cityName);
 
     try {
-      const weatherForecastResponse: Response = await fetch(url, {
-        method: 'GET',
-      });
+      const weatherForecastResponse = await axios.get(url);
+      const generalWeatherForecast: GeneralWeatherForecast_Type =
+        weatherForecastResponse.data;
 
-      if (weatherForecastResponse.ok) {
-        const generalWeatherForecast: GeneralWeatherForecast_Type =
-          await weatherForecastResponse.json();
+      // Данные для рендера информации о прогнозе погоды на ближайшие 12 часов (шаг 3 часа):
+      const dailyWeatherForecastDataToRender = extractDailyWeatherForecast(
+        generalWeatherForecast
+      );
+      thunkApi.dispatch(
+        setCurrentDayForecastData(dailyWeatherForecastDataToRender)
+      );
 
-        // Данные для рендера информации о прогнозе погоды на ближайшие 12 часов (шаг 3 часа):
-        const dailyWeatherForecastDataToRender = extractDailyWeatherForecast(
-          generalWeatherForecast
-        );
-        thunkApi.dispatch(
-          setCurrentDayForecastData(dailyWeatherForecastDataToRender)
-        );
+      console.log('Общий прогноз погоды:', generalWeatherForecast);
 
-        console.log('Общий прогноз погоды:', generalWeatherForecast);
-
-        return generalWeatherForecast;
-      } else {
-        const errorMsg: string = `HTTP Error: ${weatherForecastResponse.status} ${weatherForecastResponse.statusText}`;
-        console.log(errorMsg);
-
-        thunkApi.dispatch(setErrorMsg(errorMsg));
-        return thunkApi.rejectWithValue(errorMsg);
-      }
+      return generalWeatherForecast;
     } catch (error: unknown) {
       const errorMsg: string = `Error: ${(error as Error).message}`;
 

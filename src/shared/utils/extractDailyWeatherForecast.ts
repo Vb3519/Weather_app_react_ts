@@ -3,7 +3,7 @@ import {
   WeatherForecastDay_Type,
 } from '../../app/features/weatherForecast/weatherForecastTypes';
 
-interface threeHoursWeatherData_Type {
+export interface ThreeHoursWeatherData_Type {
   time: string;
   temp: number | null;
   icon: string;
@@ -17,9 +17,9 @@ const extractDailyWeatherForecast = (
   const dailyWeatherForecastData: WeatherForecastDay_Type[] =
     generalWeatherForecast.list.slice(0, 5);
 
-  const dailyWeatherForecastDataToRender: threeHoursWeatherData_Type[] = [];
+  const dailyWeatherForecastDataToRender: ThreeHoursWeatherData_Type[] = [];
 
-  const threeHoursWeatherData: threeHoursWeatherData_Type = {
+  const threeHoursWeatherData: ThreeHoursWeatherData_Type = {
     time: '',
     temp: null,
     icon: '',
@@ -28,7 +28,7 @@ const extractDailyWeatherForecast = (
   dailyWeatherForecastData.forEach((elem) => {
     if (elem.weather) {
       threeHoursWeatherData.time = elem.dt_txt.slice(-8, -3);
-      threeHoursWeatherData.temp = elem.main.temp;
+      threeHoursWeatherData.temp = Math.floor(elem.main.temp);
       threeHoursWeatherData.icon = elem.weather[0].icon;
     }
 
