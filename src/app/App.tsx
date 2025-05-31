@@ -7,9 +7,8 @@ import EmptyCurrentWeather from './features/currentWeather/EmptyCurrentWeather';
 import CurrentDayForecast from './features/weatherForecast/CurrentDayForecast';
 import EmptyCurrentDayForecast from './features/weatherForecast/EmptyCurrentDayForecast';
 
-import GeneralFiveDaysForecast from './features/weatherForecast/FiveDaysForecast/GeneralFiveDaysForecast';
-import DetailedFiveDaysForecast from './features/weatherForecast/FiveDaysForecast/DetailedFiveDaysForecast';
-import EmptyFiveDaysForecast from './features/weatherForecast/FiveDaysForecast/EmptyFiveDaysForecast';
+import GeneralFiveDaysForecast from './features/weatherForecast/FiveDaysForecast/General/GeneralFiveDaysForecast';
+import DetailedFiveDaysForecast from './features/weatherForecast/FiveDaysForecast/Detailed/DetailedFiveDaysForecast';
 
 const App = () => {
   return (
@@ -23,9 +22,6 @@ const App = () => {
 
         <GeneralFiveDaysForecast />
         <DetailedFiveDaysForecast />
-
-        {/* -------------- ЗАГЛУШКИ: -------------- */}
-        <EmptyFiveDaysForecast />
       </main>
 
       {/* -------------- FOOTER: -------------- */}

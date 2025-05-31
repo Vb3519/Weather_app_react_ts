@@ -9,15 +9,20 @@ import { getWeatherForecastEndpointLink } from '../../../shared/config/apiData';
 // Utils:
 import imitateFetchDataDelay from '../../../shared/utils/imitateFetchDataDelay';
 import extractDailyWeatherForecast from '../../../shared/utils/extractDailyWeatherForecast';
+import { extractWeatherForecastDataToRender } from '../../../shared/utils/extractFiveDaysWeatherForecastData';
+import getFiveDaysWeatherForecastBtnsTitles from '../../../shared/utils/getFiveDaysWeatherForecastBtnsTitles';
 
 // Types:
 import { GeneralWeatherForecast_Type } from '../../features/weatherForecast/weatherForecastTypes';
 import { ThreeHoursWeatherData_Type } from '../../../shared/utils/extractDailyWeatherForecast';
+import { DayDataProps_Type } from '../../../shared/utils/getFiveDaysWeatherForecastBtnsTitles';
+import { DayWeatherParams_Type } from '../../../shared/utils/extractFiveDaysWeatherForecastData';
 
 interface WeatherForecastState_Type {
   generalWeatherForecast: GeneralWeatherForecast_Type | null;
   currentDayForecast: ThreeHoursWeatherData_Type[] | null;
-  fiveDaysForecast: null;
+  fiveDaysForecast: DayWeatherParams_Type[] | null;
+  fiveDaysForecastBtnsTitles: DayDataProps_Type[] | null;
   errorMsg: string;
   isLoadingViaAPI: boolean;
 }
@@ -26,7 +31,8 @@ interface WeatherForecastSlice_Type {
   weatherForecast: {
     generalWeatherForecast: GeneralWeatherForecast_Type | null;
     currentDayForecast: ThreeHoursWeatherData_Type[] | null;
-    fiveDaysForecast: null;
+    fiveDaysForecast: DayWeatherParams_Type[] | null;
+    fiveDaysForecastBtnsTitles: DayDataProps_Type[] | null;
     errorMsg: string;
     isLoadingViaAPI: boolean;
   };
@@ -54,6 +60,18 @@ export const getGeneralWeatherForecast = createAsyncThunk(
         setCurrentDayForecastData(dailyWeatherForecastDataToRender)
       );
 
+      // Данные для рендера информации о прогнозе погоды на ближайшие 5 суток (общие и детализированные):
+      const fiveDaysWeatherForecastDataToRender =
+        extractWeatherForecastDataToRender(generalWeatherForecast);
+      thunkApi.dispatch(
+        setFiveDaysForecastData(fiveDaysWeatherForecastDataToRender)
+      );
+
+      // Данные для кнопок-переключателей (5 шт.) по дням детализированного прогноза погоды:
+      const forecastBtnsTitles: DayDataProps_Type[] =
+        getFiveDaysWeatherForecastBtnsTitles();
+      thunkApi.dispatch(setFiveDaysForecastBtnTitles(forecastBtnsTitles));
+
       console.log('Общий прогноз погоды:', generalWeatherForecast);
 
       return generalWeatherForecast;
@@ -71,6 +89,7 @@ const initialState: WeatherForecastState_Type = {
   generalWeatherForecast: null,
   currentDayForecast: null,
   fiveDaysForecast: null,
+  fiveDaysForecastBtnsTitles: null,
   errorMsg: '',
   isLoadingViaAPI: false,
 };
@@ -85,6 +104,14 @@ const weatherForecastSlice = createSlice({
 
     setCurrentDayForecastData: (state, action) => {
       return { ...state, currentDayForecast: action.payload };
+    },
+
+    setFiveDaysForecastData: (state, action) => {
+      return { ...state, fiveDaysForecast: action.payload };
+    },
+
+    setFiveDaysForecastBtnTitles: (state, action) => {
+      return { ...state, fiveDaysForecastBtnsTitles: action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -107,11 +134,17 @@ const weatherForecastSlice = createSlice({
 });
 
 // Действия:
-export const { setErrorMsg, setCurrentDayForecastData } =
-  weatherForecastSlice.actions;
+export const {
+  setErrorMsg,
+  setCurrentDayForecastData,
+  setFiveDaysForecastData,
+  setFiveDaysForecastBtnTitles,
+} = weatherForecastSlice.actions;
 
 // Слайс состояния:
 export const selectWeatherForecastSlice = (state: WeatherForecastSlice_Type) =>
   state.weatherForecast;
+export const selectFiveDaysForecast = (state: WeatherForecastSlice_Type) =>
+  state.weatherForecast.fiveDaysForecast;
 
 export default weatherForecastSlice.reducer;

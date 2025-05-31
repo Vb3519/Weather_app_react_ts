@@ -3,6 +3,8 @@ import {
   WeatherForecastDay_Type,
 } from '../../app/features/weatherForecast/weatherForecastTypes';
 
+const shortWeekDays = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+
 // Разделение массива данных от Api с 40 элементами на подмассивы (посуточные данные):
 const splitGeneralWeatherForecast = (
   weatherForecastData: GeneralWeatherForecast_Type
@@ -20,7 +22,10 @@ const splitGeneralWeatherForecast = (
   return splittedGeneralWeatherForecast;
 };
 
-interface DayWeatherParams_Type {
+export interface DayWeatherParams_Type {
+  // день недели:
+  currentDayValue: string;
+
   // данные для рендера общего 5ти дневного прогноза:
   avgTemp: number;
   weatherIcon: string;
@@ -35,9 +40,13 @@ interface DayWeatherParams_Type {
 }
 
 // Извлечение данных для ренедра из данных полученных от Api:
-const extractWeatherForecastDataToRender = (
+export const extractWeatherForecastDataToRender = (
   generalWeatherForecast: GeneralWeatherForecast_Type
 ) => {
+  const timeNow = new Date();
+
+  let currentDayIndex: number = timeNow.getDay();
+
   // массив разделен на 5 массивов (отдельно под каждые сутки):
   const forecastSplittedPerDay = splitGeneralWeatherForecast(
     generalWeatherForecast
@@ -47,6 +56,8 @@ const extractWeatherForecastDataToRender = (
 
   forecastSplittedPerDay.forEach((dayForecast) => {
     const dayWeatherParams: DayWeatherParams_Type = {
+      currentDayValue: '',
+
       avgTemp: 0,
       weatherIcon: '',
       weatherDescription: '',
@@ -59,6 +70,7 @@ const extractWeatherForecastDataToRender = (
     };
 
     if (dayForecast[3].weather) {
+      dayWeatherParams.currentDayValue = shortWeekDays[currentDayIndex];
       dayWeatherParams.avgTemp = calcAverageDayTemp(dayForecast);
       dayWeatherParams.weatherIcon = dayForecast[3].weather[0].icon;
       dayWeatherParams.weatherDescription =
@@ -66,12 +78,19 @@ const extractWeatherForecastDataToRender = (
 
       dayWeatherParams.maxTemp = dayForecast[3].main.temp_max;
       dayWeatherParams.minTemp = dayForecast[3].main.temp_min;
+
       dayWeatherParams.wind = dayForecast[3].wind.speed;
       dayWeatherParams.humidity = dayForecast[3].main.humidity;
       dayWeatherParams.visibility = dayForecast[3].visibility;
     }
 
     everyDayWeatherForecastToRender.push({ ...dayWeatherParams });
+
+    if (currentDayIndex < 6) {
+      currentDayIndex = currentDayIndex + 1;
+    } else {
+      currentDayIndex = 0;
+    }
   });
 
   return everyDayWeatherForecastToRender;
@@ -85,7 +104,7 @@ const calcAverageDayTemp = (dayForecast: WeatherForecastDay_Type[]): number => {
     dayTempValues += elem.main.temp;
   });
 
-  const avgTemp: number = dayTempValues / dayForecast.length;
+  const avgTemp: number = Math.floor(dayTempValues / dayForecast.length);
 
   return avgTemp;
 };
