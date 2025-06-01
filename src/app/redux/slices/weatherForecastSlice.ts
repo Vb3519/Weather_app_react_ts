@@ -21,20 +21,24 @@ import { DayWeatherParams_Type } from '../../../shared/utils/extractFiveDaysWeat
 interface WeatherForecastState_Type {
   generalWeatherForecast: GeneralWeatherForecast_Type | null;
   currentDayForecast: ThreeHoursWeatherData_Type[] | null;
-  fiveDaysForecast: DayWeatherParams_Type[] | null;
+  fiveDaysForecast: DayWeatherParams_Type[];
   fiveDaysForecastBtnsTitles: DayDataProps_Type[] | null;
   errorMsg: string;
   isLoadingViaAPI: boolean;
+  selectedForecastDayIndex: number;
+  isForecastDetailsViewOn: boolean;
 }
 
 interface WeatherForecastSlice_Type {
   weatherForecast: {
     generalWeatherForecast: GeneralWeatherForecast_Type | null;
     currentDayForecast: ThreeHoursWeatherData_Type[] | null;
-    fiveDaysForecast: DayWeatherParams_Type[] | null;
+    fiveDaysForecast: DayWeatherParams_Type[];
     fiveDaysForecastBtnsTitles: DayDataProps_Type[] | null;
     errorMsg: string;
     isLoadingViaAPI: boolean;
+    selectedForecastDayIndex: number;
+    isForecastDetailsViewOn: boolean;
   };
 }
 
@@ -88,10 +92,12 @@ export const getGeneralWeatherForecast = createAsyncThunk(
 const initialState: WeatherForecastState_Type = {
   generalWeatherForecast: null,
   currentDayForecast: null,
-  fiveDaysForecast: null,
+  fiveDaysForecast: [],
   fiveDaysForecastBtnsTitles: null,
   errorMsg: '',
   isLoadingViaAPI: false,
+  selectedForecastDayIndex: 0,
+  isForecastDetailsViewOn: false,
 };
 
 const weatherForecastSlice = createSlice({
@@ -112,6 +118,14 @@ const weatherForecastSlice = createSlice({
 
     setFiveDaysForecastBtnTitles: (state, action) => {
       return { ...state, fiveDaysForecastBtnsTitles: action.payload };
+    },
+
+    setSelectedForecastDayIndex: (state, action) => {
+      return { ...state, selectedForecastDayIndex: action.payload };
+    },
+
+    setIsForecastDetailsViewOn: (state, action) => {
+      return { ...state, isForecastDetailsViewOn: action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -139,6 +153,8 @@ export const {
   setCurrentDayForecastData,
   setFiveDaysForecastData,
   setFiveDaysForecastBtnTitles,
+  setSelectedForecastDayIndex,
+  setIsForecastDetailsViewOn,
 } = weatherForecastSlice.actions;
 
 // Слайс состояния:
@@ -146,5 +162,9 @@ export const selectWeatherForecastSlice = (state: WeatherForecastSlice_Type) =>
   state.weatherForecast;
 export const selectFiveDaysForecast = (state: WeatherForecastSlice_Type) =>
   state.weatherForecast.fiveDaysForecast;
+
+export const selectFiveDaysForecastBtnsTitles = (
+  state: WeatherForecastSlice_Type
+) => state.weatherForecast.fiveDaysForecastBtnsTitles;
 
 export default weatherForecastSlice.reducer;

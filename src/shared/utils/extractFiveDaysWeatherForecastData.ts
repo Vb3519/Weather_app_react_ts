@@ -76,12 +76,14 @@ export const extractWeatherForecastDataToRender = (
       dayWeatherParams.weatherDescription =
         dayForecast[3].weather[0].description;
 
-      dayWeatherParams.maxTemp = dayForecast[3].main.temp_max;
-      dayWeatherParams.minTemp = dayForecast[3].main.temp_min;
+      dayWeatherParams.maxTemp = Math.floor(dayForecast[3].main.temp_max);
+      dayWeatherParams.minTemp = Math.floor(dayForecast[3].main.temp_min);
 
       dayWeatherParams.wind = dayForecast[3].wind.speed;
       dayWeatherParams.humidity = dayForecast[3].main.humidity;
-      dayWeatherParams.visibility = dayForecast[3].visibility;
+      dayWeatherParams.visibility = Math.floor(
+        dayForecast[3].visibility / 1000
+      );
     }
 
     everyDayWeatherForecastToRender.push({ ...dayWeatherParams });

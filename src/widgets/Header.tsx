@@ -51,7 +51,10 @@ const Header = () => {
 
   return (
     <header className="w-full p-2 font-[inter] flex justify-between items-center gap-4 xs:px-4">
-      <button className="p-2 text-[whitesmoke] bg-white/20 rounded-sm cursor-pointer">
+      <button
+        className="p-2 text-[whitesmoke] bg-white/20 rounded-sm cursor-pointer"
+        title="История запросов"
+      >
         <MdOutlineSegment className="text-2xl" />
       </button>
 
