@@ -28,8 +28,8 @@ const GeneralFiveDaysForecast = () => {
   ).isForecastDetailsViewOn;
 
   return (
-    <section className="p-2 text-[#e0e0e0] text-sm text-shadow-sm bg-white/20 rounded-sm">
-      <h2 className="pb-2 font-semibold text-xl text-center border-b-2 border-b-blue-800/20">
+    <section className="p-2 text-[#e0e0e0] text-sm text-shadow-sm bg-white/20 rounded-sm sm:p-4">
+      <h2 className="pb-2 font-semibold text-xl text-center border-b-2 border-b-blue-800/20 sm:text-2xl">
         Прогноз погоды на 5 дней:
       </h2>
 
@@ -86,7 +86,7 @@ const GeneralFiveDaysForecastElem: React.FC<
 
   return (
     <li
-      className="p-2 rounded-sm transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)] cursor-pointer"
+      className="p-2 rounded-sm transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)] cursor-pointer sm:text-lg sm:p-4"
       onClick={() => {
         handleSetIsForecastDetailsViewAndDayIndex();
       }}

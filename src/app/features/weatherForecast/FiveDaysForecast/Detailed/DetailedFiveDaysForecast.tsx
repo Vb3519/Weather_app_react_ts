@@ -99,7 +99,10 @@ const DetailedFiveDaysForecast = () => {
 
             <ul className="pt-3 flex gap-2 text-[#e0e0e0] border-t-2 border-t-blue-200/20">
               <li className="flex flex-col items-center justify-center gap-1 basis-1/3">
-                <div className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer">
+                <div
+                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer"
+                  title="Скорость ветра"
+                >
                   <FaWind className="text-xl text-[whitesmoke]" />
                 </div>
                 <span className="text-sm">
@@ -107,7 +110,10 @@ const DetailedFiveDaysForecast = () => {
                 </span>
               </li>
               <li className="flex flex-col items-center justify-center gap-1 basis-1/3">
-                <div className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer">
+                <div
+                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer"
+                  title="Влажность"
+                >
                   <FaDroplet className="text-xl text-[whitesmoke]" />
                 </div>
                 <span className="text-sm">
@@ -115,7 +121,10 @@ const DetailedFiveDaysForecast = () => {
                 </span>
               </li>
               <li className="flex flex-col items-center justify-center gap-1 basis-1/3">
-                <div className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer">
+                <div
+                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer"
+                  title="Видимость"
+                >
                   <MdVisibility className="text-xl text-[whitesmoke]" />
                 </div>
                 <span className="text-sm">

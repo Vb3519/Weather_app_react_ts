@@ -50,15 +50,15 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full p-2 font-[inter] flex justify-between items-center gap-4 xs:px-4">
+    <header className="w-full p-2 font-[inter] flex justify-between items-center gap-4 xs:px-4 sm:px-16 md:px-24 lg:px-30 xl:px-36 2xl:px-46">
       <button
-        className="p-2 text-[whitesmoke] bg-white/20 rounded-sm cursor-pointer"
+        className="p-2 text-[whitesmoke] bg-white/20 rounded-sm cursor-pointer sm:p-3"
         title="История запросов"
       >
         <MdOutlineSegment className="text-2xl" />
       </button>
 
-      <form className="w-full p-2 flex gap-2 justify-center items-center bg-[whitesmoke] rounded-sm">
+      <form className="w-full p-2 flex gap-2 justify-center items-center bg-[whitesmoke] rounded-sm sm:p-2.5 sm:text-xl">
         <button
           disabled={currentWeatherState.isLoadingViaAPI}
           className="text-gray-500 text-xl cursor-pointer"
@@ -68,7 +68,7 @@ const Header = () => {
             handleGetWeatherData();
           }}
         >
-          <FaMagnifyingGlass />
+          <FaMagnifyingGlass className="sm:text-2xl" />
         </button>
 
         <input

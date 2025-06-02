@@ -20,7 +20,7 @@ const CurrentDayForecast = () => {
     weatherForecastState.currentDayForecast;
 
   return (
-    <section className="p-2 text-[#e0e0e0] text-sm text-shadow-sm bg-white/20 rounded-sm">
+    <section className="p-2 text-[#e0e0e0] text-sm text-shadow-sm bg-white/20 rounded-sm sm:p-4">
       <ul className="flex gap-1 items-center justify-between">
         {currentDayForecastData ? (
           currentDayForecastData.map((elem: ThreeHoursWeatherData_Type) => {
@@ -56,7 +56,7 @@ const CurrentDayForecastPart: React.FC<CurrentDayForecastPartProps_Type> = ({
   // const { time, icon, temp } = props;
 
   return (
-    <li className="p-1 flex flex-col items-center justify-center gap-1 cursor-pointer rounded-sm transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)]">
+    <li className="p-1 flex flex-col items-center justify-center gap-1 cursor-pointer rounded-sm transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)] sm:text-lg sm:p-4">
       <p>{time}</p>
       <img
         src={`http://openweathermap.org/img/wn/${icon}.png`}
