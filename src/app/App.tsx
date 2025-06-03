@@ -26,7 +26,7 @@ const App = () => {
       <Footer />
 
       {/* ------- Weather Query History: ------- */}
-      {/* <WeatherQueryHistory /> */}
+      <WeatherQueryHistory />
     </div>
   );
 };
