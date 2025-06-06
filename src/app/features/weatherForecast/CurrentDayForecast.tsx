@@ -42,6 +42,7 @@ const CurrentDayForecast = () => {
 };
 
 // Компонент-часть прогноза погоды на ближайшие 12 часов:
+// ------------------------------------------------------------------
 interface CurrentDayForecastPartProps_Type {
   time: string;
   icon: string;

@@ -46,8 +46,8 @@ const DetailedFiveDaysForecast = () => {
       {fiveDaysGeneralForecast.length > 0 && isForecastDetailsViewOn ? (
         <>
           <div className="flex items-center gap-2 overflow-x-auto">
-            <div className="flex items-center gap-2">
-              <ul className="my-2 w-full flex gap-2 text-nowrap">
+            <div className="mx-auto flex items-center gap-2 xs:gap-4">
+              <ul className="my-2 w-full flex gap-2 text-nowrap xs:gap-4">
                 {forecastBtnsTitles?.map((elem, index) => {
                   return (
                     <ForecastTitleElem
@@ -66,7 +66,7 @@ const DetailedFiveDaysForecast = () => {
                   handleTurnOffForecastDetailsView();
                 }}
               >
-                <FaCaretUp />
+                <FaCaretUp className="sm:text-lg" />
               </div>
             </div>
           </div>
@@ -80,12 +80,12 @@ const DetailedFiveDaysForecast = () => {
                   alt="weather 5-day forecast state"
                 ></img>
               </div>
-              <span className="font-semibold text-[16px]">
+              <span className="font-semibold text-[16px] sm:text-xl">
                 {fiveDaysGeneralForecast[selectedDayIndex].weatherDescription}
               </span>
             </div>
 
-            <ul className="flex flex-col gap-1 items-center">
+            <ul className="flex flex-col gap-1 items-center sm:text-lg">
               <li>
                 Максимальная темп:{' '}
                 {fiveDaysGeneralForecast[selectedDayIndex].maxTemp}
@@ -100,34 +100,34 @@ const DetailedFiveDaysForecast = () => {
             <ul className="pt-3 flex gap-2 text-[#e0e0e0] border-t-2 border-t-blue-200/20">
               <li className="flex flex-col items-center justify-center gap-1 basis-1/3">
                 <div
-                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer"
+                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer sm:p-3"
                   title="Скорость ветра"
                 >
-                  <FaWind className="text-xl text-[whitesmoke]" />
+                  <FaWind className="text-xl text-[whitesmoke] sm:text-2xl" />
                 </div>
-                <span className="text-sm">
+                <span className="text-sm sm:text-xl">
                   {fiveDaysGeneralForecast[selectedDayIndex].wind} м/с
                 </span>
               </li>
               <li className="flex flex-col items-center justify-center gap-1 basis-1/3">
                 <div
-                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer"
+                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer sm:p-3"
                   title="Влажность"
                 >
-                  <FaDroplet className="text-xl text-[whitesmoke]" />
+                  <FaDroplet className="text-xl text-[whitesmoke] sm:text-2xl" />
                 </div>
-                <span className="text-sm">
+                <span className="text-sm sm:text-xl">
                   {fiveDaysGeneralForecast[selectedDayIndex].humidity}%
                 </span>
               </li>
               <li className="flex flex-col items-center justify-center gap-1 basis-1/3">
                 <div
-                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer"
+                  className="p-2 bg-[#86959d] rounded-sm shadow-sm cursor-pointer sm:p-3"
                   title="Видимость"
                 >
-                  <MdVisibility className="text-xl text-[whitesmoke]" />
+                  <MdVisibility className="text-xl text-[whitesmoke] sm:text-2xl" />
                 </div>
-                <span className="text-sm">
+                <span className="text-sm sm:text-xl">
                   {fiveDaysGeneralForecast[selectedDayIndex].visibility} км
                 </span>
               </li>
@@ -140,6 +140,9 @@ const DetailedFiveDaysForecast = () => {
 };
 
 export default DetailedFiveDaysForecast;
+
+// Элемент-переключатель общего и детализированного суточного прогноза погоды (из 5-ти дневного прогноза):
+// -------------------------------------------------------------------------------------------------------------------
 
 interface ForecastTitleElemProps_Types {
   day: string;
@@ -169,7 +172,7 @@ const ForecastTitleElem: React.FC<ForecastTitleElemProps_Types> = (props) => {
 
   return (
     <li
-      className={`p-2 cursor-pointer rounded-sm transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)] ${
+      className={`p-2 cursor-pointer rounded-sm transition duration-200 ease-in hover:bg-white/15 hover:[box-shadow:0_4px_10px_rgba(0,0,0,0.15)] sm:text-lg md:px-4 ${
         selectedDayIndex === index
           ? 'bg-white/15 [box-shadow:0_4px_10px_rgba(0,0,0,0.15)]'
           : ''

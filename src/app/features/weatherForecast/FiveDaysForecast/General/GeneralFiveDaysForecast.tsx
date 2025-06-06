@@ -51,7 +51,7 @@ const GeneralFiveDaysForecast = () => {
               );
             })
           ) : (
-            <GiThermometerHot className="m-auto h-[80%] text-8xl opacity-50" />
+            <GiThermometerHot className="m-auto h-[80%] text-8xl opacity-50 sm:text-9xl" />
           )}
         </ul>
       )}
@@ -103,7 +103,7 @@ const GeneralFiveDaysForecastElem: React.FC<
         <span>{temp}°С</span>
         <span className="ml-auto text-right">{weatherDescription}</span>
         <div>
-          <FaCaretDown />
+          <FaCaretDown className="sm:text-lg" />
         </div>
       </button>
     </li>
