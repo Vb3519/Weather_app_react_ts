@@ -1,6 +1,7 @@
+// React-icons:
 import { TiWeatherPartlySunny } from 'react-icons/ti';
 
-const EmptyCurrentDayForecast = () => {
+const EmptyCurrentDayForecast = ({}) => {
   return (
     <li className="w-full flex flex-col gap-2 items-center">
       <h2 className="text-center sm:text-lg">

@@ -16,6 +16,12 @@ import {
 // Utils:
 import imitateFetchDataDelay from '../../../shared/utils/imitateFetchDataDelay';
 
+// State:
+import {
+  addCityWeatherQuery,
+  deleteWeatherQueryElem,
+} from './weatherQuerySlice';
+
 // Получение данных о текущей погоде по названию города:
 // ------------------------------------------------------------
 export const getCurrentWeatherData = createAsyncThunk(
@@ -32,6 +38,17 @@ export const getCurrentWeatherData = createAsyncThunk(
       const fetchWeatherDataResponse = await axios.get(url);
       const weatherData: CurrentWeatherData_Type =
         fetchWeatherDataResponse.data;
+
+      // Добавление данных о запрощенной погоде (в историю запросов):
+      if (weatherData.weather) {
+        const weatherQueryData = {
+          cityName: weatherData.name,
+          weather_icon: weatherData.weather[0].icon,
+          temp: weatherData.main.temp,
+        };
+
+        thunkAPI.dispatch(addCityWeatherQuery(weatherQueryData));
+      }
 
       console.log('Текущая погода:', weatherData);
       return weatherData;

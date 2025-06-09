@@ -1,3 +1,6 @@
+import { useSelector } from 'react-redux';
+
+// Ui:
 import Header from '../widgets/Header';
 import Footer from '../widgets/Footer';
 
@@ -8,7 +11,16 @@ import GeneralFiveDaysForecast from './features/weatherForecast/FiveDaysForecast
 
 import WeatherQueryHistory from './features/weatherQueryHistory/WeatherQueryHistory';
 
+// State:
+import { selectWeatherQueryHistorySlice } from './redux/slices/weatherQuerySlice';
+
 const App = () => {
+  const weatherQueryHistoryStateSlice = useSelector(
+    selectWeatherQueryHistorySlice
+  );
+  const isWeatherHistoryMenuOpened: boolean =
+    weatherQueryHistoryStateSlice.isHistoryMenuOpened;
+
   return (
     <div className="relative h-full w-full overflow-y-auto flex flex-col gap-4 items-center justify-center bg-gradient-135">
       {/* ------- Header: ------- */}
@@ -17,6 +29,7 @@ const App = () => {
       {/* ------- Main: ------- */}
       <main className="mb-auto px-2 w-full font-[inter] flex flex-col gap-4 xs:px-4 sm:px-16 md:px-24 lg:px-30 xl:px-36 2xl:px-46">
         <CurrentWeather />
+
         <CurrentDayForecast />
 
         <GeneralFiveDaysForecast />
@@ -26,7 +39,7 @@ const App = () => {
       <Footer />
 
       {/* ------- Weather Query History: ------- */}
-      {/* <WeatherQueryHistory /> */}
+      {isWeatherHistoryMenuOpened ? <WeatherQueryHistory /> : null}
     </div>
   );
 };

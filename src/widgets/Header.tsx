@@ -11,17 +11,14 @@ import {
   getCurrentWeatherData,
 } from '../app/redux/slices/currentWeatherSlice';
 
-import {
-  setCurrentDayForecastData,
-  selectWeatherForecastSlice,
-  getGeneralWeatherForecast,
-} from '../app/redux/slices/weatherForecastSlice';
+import { getGeneralWeatherForecast } from '../app/redux/slices/weatherForecastSlice';
 
+import {
+  toggleHistoryMenuVisibility,
+  addCityWeatherQuery,
+} from '../app/redux/slices/weatherQuerySlice';
 // Types:
 import { AppDispatch } from '../app/redux/store';
-
-// Utils:
-import extractDailyWeatherForecast from '../shared/utils/extractDailyWeatherForecast';
 
 const Header = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -49,11 +46,20 @@ const Header = () => {
     }
   };
 
+  // Функция-тоглер отображения меню запросов о погоде:
+  // ----------------------------------------------------------
+  const handleToggleHistoryMenyVisibility = () => {
+    dispatch(toggleHistoryMenuVisibility());
+  };
+
   return (
     <header className="w-full p-2 font-[inter] flex justify-between items-center gap-4 xs:px-4 sm:px-16 md:px-24 lg:px-30 xl:px-36 2xl:px-46">
       <button
         className="p-2 text-[whitesmoke] bg-white/20 rounded-sm cursor-pointer sm:p-3"
         title="История запросов"
+        onClick={() => {
+          handleToggleHistoryMenyVisibility();
+        }}
       >
         <MdOutlineSegment className="text-2xl" />
       </button>

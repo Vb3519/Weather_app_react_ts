@@ -13,6 +13,7 @@ import { CurrentWeatherData_Type } from './currentWeatherTypes';
 
 // Ui:
 import EmptyCurrentWeather from './EmptyCurrentWeather';
+import Loader from '../../../shared/ui/Loader';
 
 // Utils:
 import { getCurrentDate } from '../../../shared/utils/getCurrentDate';
@@ -23,6 +24,7 @@ const CurrentWeather = () => {
 
   const currentWeatherData: CurrentWeatherData_Type | null =
     currentWeatherState.weatherData;
+  const isCurrentWeatherLoading = currentWeatherState.isLoadingViaAPI;
 
   if (currentWeatherData && currentWeatherData.weather) {
     const currentDate: string = getCurrentDate();
@@ -89,6 +91,6 @@ const CurrentWeather = () => {
     );
   }
 
-  return <EmptyCurrentWeather />;
+  return <>{isCurrentWeatherLoading ? <Loader /> : <EmptyCurrentWeather />}</>;
 };
 export default CurrentWeather;
