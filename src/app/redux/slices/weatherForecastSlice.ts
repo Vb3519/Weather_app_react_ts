@@ -142,7 +142,16 @@ const weatherForecastSlice = createSlice({
     });
 
     builder.addCase(getGeneralWeatherForecast.rejected, (state) => {
-      return { ...state, isLoadingViaAPI: false };
+      return {
+        ...state,
+        generalWeatherForecast: null,
+        currentDayForecast: null,
+        fiveDaysForecast: [],
+        fiveDaysForecastBtnsTitles: null,
+        isLoadingViaAPI: false,
+        selectedForecastDayIndex: 0,
+        isForecastDetailsViewOn: false,
+      };
     });
   },
 });
