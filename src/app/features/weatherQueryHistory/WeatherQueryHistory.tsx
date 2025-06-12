@@ -73,7 +73,7 @@ const WeatherQueryHistoryDataElem: React.FC<
   WeatherQueryHistoryDataElemProps_Type
 > = ({ cityName, weather_icon, temp }) => {
   return (
-    <li className="h-full p-2 flex flex-col gap-2 items-center justify-center rounded-sm bg-[#20785f] cursor-pointer sm:text-lg sm:p-4">
+    <li className="h-full min-w-30 p-2 flex flex-col gap-2 items-center justify-center rounded-sm bg-[#20785f] cursor-pointer sm:text-lg sm:p-4">
       <h3 className="text-center">{cityName}</h3>
       <img
         src={`http://openweathermap.org/img/wn/${weather_icon}.png`}
@@ -83,14 +83,3 @@ const WeatherQueryHistoryDataElem: React.FC<
     </li>
   );
 };
-
-{
-  /* <li className="h-full min-h-32 p-2 flex flex-col gap-2 items-center justify-center rounded-sm bg-[#20785f] cursor-pointer sm:text-lg sm:p-4">
-  <h3 className="text-center">Название города</h3>
-  <img
-    src={`http://openweathermap.org/img/wn/02d.png`}
-    alt="weather state"
-  ></img>
-  <p>15°С</p>
-</li>; */
-}

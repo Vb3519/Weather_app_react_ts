@@ -47,6 +47,7 @@ export interface CurrentWeatherState_Type {
   weatherData: CurrentWeatherData_Type | null;
   isLoadingViaAPI: boolean;
   errorMsg: string;
+  weatherQueryCounter: number;
 }
 
 export interface CurrentWeatherSlice_Type {
@@ -55,5 +56,6 @@ export interface CurrentWeatherSlice_Type {
     weatherData: CurrentWeatherData_Type | null;
     isLoadingViaAPI: boolean;
     errorMsg: string;
+    weatherQueryCounter: number;
   };
 }

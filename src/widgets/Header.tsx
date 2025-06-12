@@ -16,6 +16,7 @@ import { getGeneralWeatherForecast } from '../app/redux/slices/weatherForecastSl
 import {
   toggleHistoryMenuVisibility,
   addCityWeatherQuery,
+  deleteWeatherQueryElem,
 } from '../app/redux/slices/weatherQuerySlice';
 // Types:
 import { AppDispatch } from '../app/redux/store';
@@ -24,6 +25,7 @@ const Header = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const currentWeatherState = useSelector(selectCurrentWeatherSlice);
+  const weatherQueryCounter = currentWeatherState.weatherQueryCounter;
   const cityName: string = currentWeatherState.cityName;
 
   // Установка значения названия города (для прогноза погоды):
@@ -38,6 +40,10 @@ const Header = () => {
     if (cityName) {
       // Текущий прогноз погоды:
       dispatch(getCurrentWeatherData({ cityName }));
+
+      if (weatherQueryCounter >= 4) {
+        dispatch(deleteWeatherQueryElem());
+      }
 
       // Долгосрочный (сутки и 5 дней) прогноз погоды:
       dispatch(getGeneralWeatherForecast({ cityName }));

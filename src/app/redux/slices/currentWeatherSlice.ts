@@ -48,6 +48,8 @@ export const getCurrentWeatherData = createAsyncThunk(
         };
 
         thunkAPI.dispatch(addCityWeatherQuery(weatherQueryData));
+
+        thunkAPI.dispatch(incrementWeatherQueryCounter());
       }
 
       console.log('Текущая погода:', weatherData);
@@ -68,6 +70,7 @@ const initialState: CurrentWeatherState_Type = {
   weatherData: null,
   isLoadingViaAPI: false,
   errorMsg: '',
+  weatherQueryCounter: 0,
 };
 
 const currentWeatherSlice = createSlice({
@@ -80,6 +83,12 @@ const currentWeatherSlice = createSlice({
 
     setErrorMsg: (state, action) => {
       return { ...state, errorMsg: action.payload };
+    },
+
+    incrementWeatherQueryCounter: (state) => {
+      if (state.weatherQueryCounter < 4) {
+        state.weatherQueryCounter += 1;
+      }
     },
   },
 
@@ -112,11 +121,8 @@ const currentWeatherSlice = createSlice({
 
 // Действия:
 // --------------------
-export const {
-  setCityName,
-
-  setErrorMsg,
-} = currentWeatherSlice.actions;
+export const { setCityName, incrementWeatherQueryCounter, setErrorMsg } =
+  currentWeatherSlice.actions;
 
 // Слайсы состояния:
 // --------------------
